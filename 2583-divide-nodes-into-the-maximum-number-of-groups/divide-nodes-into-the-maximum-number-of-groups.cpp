@@ -1,69 +1,58 @@
-#include <vector>
-#include <queue>
-#include <unordered_set>
-#include <algorithm>
-using namespace std;
-
 class Solution {
 public:
-    int magnificentSets(int n, vector<vector<int>>& edges) {
-        vector<vector<int>> graph(n + 1);
-        for (auto& edge : edges) {
-            int u = edge[0], v = edge[1];
-            graph[u].push_back(v);
-            graph[v].push_back(u);
+    int magnificentSets(int n, vector<vector<int>>& e) {
+        vector<vector<int>> g(n + 1);
+        for (auto& x : e) {
+            g[x[0]].push_back(x[1]);
+            g[x[1]].push_back(x[0]);
         }
-        vector<bool> visited(n + 1, false);
-        vector<vector<int>> components; 
-        function<void(int, vector<int>&)> dfs = [&](int node, vector<int>& component) {
-            visited[node] = true;
-            component.push_back(node);
-            for (int neighbor : graph[node]) {
-                if (!visited[neighbor]) {
-                    dfs(neighbor, component);
-                }
+
+        vector<bool> v(n + 1, false);
+        vector<vector<int>> c;
+
+        function<void(int, vector<int>&)> dfs = [&](int u, vector<int>& t) {
+            v[u] = true;
+            t.push_back(u);
+            for (int w : g[u]) {
+                if (!v[w]) dfs(w, t);
             }
         };
+
         for (int i = 1; i <= n; ++i) {
-            if (!visited[i]) {
-                vector<int> component;
-                dfs(i, component);
-                components.push_back(component);
+            if (!v[i]) {
+                vector<int> t;
+                dfs(i, t);
+                c.push_back(t);
             }
         }
-        int result = 0;
-        for (auto& component : components) {
-            int maxGroups = 0;
-            bool isBipartite = true;
-            vector<int> color(n + 1, -1); 
 
-            for (int startNode : component) {
+        int r = 0;
+        for (auto& t : c) {
+            int mg = 0;
+            bool b = true;
+            for (int s : t) {
                 queue<int> q;
-                q.push(startNode);
-                vector<int> distance(n + 1, -1);
-                distance[startNode] = 0;
-
+                q.push(s);
+                vector<int> d(n + 1, -1);
+                d[s] = 0;
                 while (!q.empty()) {
-                    int node = q.front();
+                    int u = q.front();
                     q.pop();
-
-                    for (int neighbor : graph[node]) {
-                        if (distance[neighbor] == -1) {
-                            distance[neighbor] = distance[node] + 1;
-                            q.push(neighbor);
-                        } else if (abs(distance[neighbor] - distance[node]) != 1) {
-                            isBipartite = false;
+                    for (int w : g[u]) {
+                        if (d[w] == -1) {
+                            d[w] = d[u] + 1;
+                            q.push(w);
+                        } else if (abs(d[w] - d[u]) != 1) {
+                            b = false;
                         }
                     }
                 }
-
-                maxGroups = max(maxGroups, *max_element(distance.begin(), distance.end()));
+                mg = max(mg, *max_element(d.begin(), d.end()));
             }
-
-            if (!isBipartite) return -1; 
-            result += maxGroups + 1; 
+            if (!b) return -1;
+            r += mg + 1;
         }
 
-        return result;
+        return r;
     }
 };
