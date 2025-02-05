@@ -12,7 +12,6 @@ public:
         }
         if(ans.size()%2 || ans.size()>2) return false;
         if(ans.size()==0) return true;
-        swap(s2[ans[0]],s2[ans[1]]);
-        return s1==s2;
+        return (s1[ans[0]]== s2[ans[1]]) && (s1[ans[1]]==s2[ans[0]]);
     }
 };
