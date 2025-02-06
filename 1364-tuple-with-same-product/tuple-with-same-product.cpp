@@ -11,8 +11,8 @@ public:
         }
         int ans =0;
         for(auto x : m){
-            // cout<<x.second;
-            ans+=4*(x.second/2-1)*x.second/2;
+            int Z = x.second/2;
+            ans+=4*(Z-1)*Z;
         }
         return ans;
     }
