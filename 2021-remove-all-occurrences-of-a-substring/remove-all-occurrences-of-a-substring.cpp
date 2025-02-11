@@ -7,7 +7,6 @@ public:
             int j =0;
             t.push(x);
             string Z ="";
-        
             while(t.size() && t.top()==part[j] && j<m){
                 j++;
                 Z+=t.top();
@@ -20,18 +19,13 @@ public:
                 reverse(Z.begin(),Z.end());
                 for(auto y : Z){
                     t.push(y);
-
-                }
-                // cout<<Z<<" ";
-                
+                }               
             }
-            // t.push(x);
         }
         string ans ="";
         while(t.size()){
             ans+=t.top();
             t.pop();
-
         }
          reverse(ans.begin(),ans.end());
          return ans;
