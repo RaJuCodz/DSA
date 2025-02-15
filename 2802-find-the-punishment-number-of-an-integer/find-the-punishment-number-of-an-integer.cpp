@@ -7,15 +7,15 @@ public:
             int X = i * i;
             string s = to_string(X);
             int len = s.size();
-            queue<pair<int, int>> q;
-            q.push({0, 0});  
+            stack<pair<int, int>> st;
+            st.push({0, 0});  
             bool valid = false;
             
-            while (!q.empty() && !valid) {
-                int sz = q.size();
+            while (!st.empty() && !valid) {
+                int sz = st.size();
                 for (int j = 0; j < sz; j++) {
-                    auto [index, curSum] = q.front();
-                    q.pop();
+                    auto [index, curSum] = st.top();
+                    st.pop();
                     
                     if (index == len) {
                         if (curSum == i) {
@@ -29,7 +29,7 @@ public:
                     for (int k = index; k < len; k++) {
                         num = num * 10 + (s[k] - '0');  
                         if (curSum + num > i) break;    
-                        q.push({k + 1, curSum + num});  
+                        st.push({k + 1, curSum + num});  
                     }
                 }
             }
