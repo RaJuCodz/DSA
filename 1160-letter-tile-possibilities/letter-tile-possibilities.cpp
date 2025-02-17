@@ -1,25 +1,20 @@
 class Solution {
 public:
-    set<string> s;
-    void rec(int i , string &K,string &t){
-        if(i==t.size()){
-            if(K.size()) s.insert(K);
-            return;
+    int ans = 0;
+    void rec(vector<int> &fr) {
+        for (int i = 0; i < 26; ++i) {
+            if (fr[i] == 0) continue;
+            fr[i]--;  
+            ans++;
+            rec(fr); 
+            fr[i]++;  
         }
-        K+=t[i];
-        rec(i+1,K,t);
-        K.pop_back();
-        rec(i+1,K,t);
-
     }
+
     int numTilePossibilities(string tiles) {
-        string temp= "";
-        sort(tiles.begin(),tiles.end());
-        do{
-            temp="";
-            rec(0,temp,tiles);
-        }
-        while(next_permutation(tiles.begin(),tiles.end()));
-        return s.size();
+        vector<int> fr(26, 0);
+        for (char x : tiles) fr[x - 'A']++; 
+        rec(fr);
+        return ans;
     }
 };
