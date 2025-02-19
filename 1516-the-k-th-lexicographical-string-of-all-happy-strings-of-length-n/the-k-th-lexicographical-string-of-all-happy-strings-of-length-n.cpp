@@ -11,30 +11,38 @@ void rec(int i , string &cur){
     if(i==0){
         string z ="a";
         rec(i+1,z);
+        if(s.size()>=k) return;
         
          z ="b";
           rec(i+1,z);
+          if(s.size()>=k) return;
          z ="c";
           rec(i+1,z);
+          if(s.size()>=k) return;
     }
     else{
         if(cur.back()=='a'){
             string ns = cur+"b";
             rec(i+1,ns);
+            if(s.size()>=k) return;
              string nf = cur+"c";
             rec(i+1,nf);
+            if(s.size()>=k) return;
         }
         else if(cur.back()=='b'){
             string ns = cur+"a";
             rec(i+1,ns);
+            if(s.size()>=k) return;
              string nf = cur+"c";
             rec(i+1,nf);
         }
         else{
              string nf = cur+"a";
             rec(i+1,nf);
+            if(s.size()>=k) return;
             string ns = cur+"b";
             rec(i+1,ns);
+            if(s.size()>=k) return;
             
         }
     }
