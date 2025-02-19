@@ -3,6 +3,7 @@ public:
 vector<string> s;
 int n; int k;
 void rec(int i , string &cur){
+    if(s.size()>=k) return;
     if(i==n) {
         s.push_back(cur);
         return;
@@ -30,10 +31,11 @@ void rec(int i , string &cur){
             rec(i+1,nf);
         }
         else{
-            string ns = cur+"b";
-            rec(i+1,ns);
              string nf = cur+"a";
             rec(i+1,nf);
+            string ns = cur+"b";
+            rec(i+1,ns);
+            
         }
     }
 }
