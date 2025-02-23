@@ -1,32 +1,23 @@
 class Solution {
 public:
-    TreeNode* constructFromPrePost(vector<int>& preorder,
-                                   vector<int>& postorder) {
-        int numOfNodes = preorder.size();
-        vector<int> indexInPostorder(numOfNodes + 1);
-        for (int index = 0; index < numOfNodes; index++) {
-            indexInPostorder[postorder[index]] = index;
+    int index=0;
+    TreeNode* build(vector<int>& pre,vector<int>& post,int s,int e){
+        if(s>e or index>pre.size()-1) return NULL;
+        TreeNode* root=new TreeNode(pre[index]);
+        index++;
+        if(s==e) return root;
+        int ni=0;
+        for(int i=s;i<=e-1;i++){
+            if(post[i]==pre[index]){
+                ni=i;
+                break;
+            }
         }
-        return constructTree(0, numOfNodes - 1, 0, preorder, indexInPostorder);
-    }
-
-private:
-    TreeNode* constructTree(int preStart, int preEnd, int postStart,
-                            vector<int>& preorder,
-                            vector<int>& indexInPostorder) {
-        if (preStart > preEnd) return NULL;
-        if (preStart == preEnd) {
-            return new TreeNode(preorder[preStart]);
-        }
-        int leftRoot = preorder[preStart + 1];
-        int numOfNodesInLeft = indexInPostorder[leftRoot] - postStart + 1;
-        TreeNode* root = new TreeNode(preorder[preStart]);
-        root->left = constructTree(preStart + 1, preStart + numOfNodesInLeft,
-                                   postStart, preorder, indexInPostorder);
-        root->right = constructTree(preStart + numOfNodesInLeft + 1, preEnd,
-                                    postStart + numOfNodesInLeft, preorder,
-                                    indexInPostorder);
-
+        root->left=build(pre,post,s,ni);
+        root->right=build(pre,post,ni+1,e-1);
         return root;
+    }
+    TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
+        return build(preorder,postorder,0,preorder.size()-1);
     }
 };
