@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<int> applyOperations(vector<int>& nums) {
         int n = nums.size();
-        for(int m =0;m<1;m++){
+        
             
             bool ok = false;
             for(int i =0;i<n-1;i++){
@@ -14,7 +14,7 @@ public:
             }
             
             
-        }
+        
                 int cnt =0;
                 for(auto x : nums){
                     if(x==0) cnt++;
