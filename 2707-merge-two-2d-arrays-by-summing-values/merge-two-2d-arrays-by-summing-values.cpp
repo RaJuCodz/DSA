@@ -12,9 +12,8 @@ public:
              maxi=max(x[0],maxi);
         }
         vector<vector<int>> ans;
-        for(int i =1;i<=maxi;i++){
-            if(m.count(i)==false) continue;
-            ans.push_back({i,m[i]});
+        for(auto x :m){
+            ans.push_back({x.first,x.second});
         }
         return ans;
 
