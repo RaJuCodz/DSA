@@ -14,9 +14,11 @@ public:
         set<int> m;
         m.insert(0); 
         for (int i = 0; i <= 15; i++) {
-            set<int> temp(m);  
+            set<int> temp(m); 
+            int L =fastPow(3, i);
+            if(L>n) break;
             for (int x : temp) {
-                long long z =x + fastPow(3, i);
+                long long z =x+L ;
                 if(z>n) break;
                 m.insert(z);
             }
