@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<int> sieve(int n) {
+    vector<int> sieve(int n,int left) {
         vector<bool> isPrime(n + 1, true);
         vector<int> primes;
         isPrime[0] = isPrime[1] = false;
@@ -11,7 +11,7 @@ public:
                 }
             }
         }
-        for (int i = 2; i <= n; ++i) {
+        for (int i = left; i <= n; ++i) {
             if (isPrime[i]) {
                 primes.push_back(i);
             }
@@ -20,17 +20,11 @@ public:
         return primes;
 }
     vector<int> closestPrimes(int left, int right) {
-        vector<int> ans(2);
-        vector<int> p = sieve(right);
-        if(p.size()<2) return {-1,-1};
-        int l=0;
-        while(p[l]<left && l<p.size()) l++;
-    
+        vector<int> ans(2,-1);
+        vector<int> p = sieve(right,left);
         int n = p.size();
-        if(l==n) return {-1,-1};
-        if(n-l<2) return {-1,-1};
         int dis = 1e9;
-        for(int i =l;i<n-1;i++){
+        for(int i =0;i<n-1;i++){
             if(p[i+1]-p[i]<dis){
                 ans[0]=p[i];
                 ans[1]=p[i+1];
