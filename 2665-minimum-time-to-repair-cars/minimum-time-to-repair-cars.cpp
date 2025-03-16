@@ -2,7 +2,7 @@ class Solution {
 public:
     long long repairCars(vector<int>& ranks, int cars) {
         long long ans =0;
-        long long L =1; long long R = 1e17;
+        long long L =1; long long R = 1e15;
         auto f =[&](long long mid){
             long long car =0;
             for(auto x : ranks){
