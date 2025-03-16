@@ -6,7 +6,7 @@ public:
         auto f =[&](long long mid){
             long long car =0;
             for(auto x : ranks){
-                car+=(int)sqrtl(mid/x);
+                car+=sqrt(mid/x);
             }
             return car>=cars;
         };
